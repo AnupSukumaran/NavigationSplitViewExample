@@ -9,11 +9,18 @@ import SwiftUI
 
 struct SidebarContentView: View {
     
-    @Bindable var viewModel: ViewModel
+    @ObservedObject var viewModel: ViewModel
     
     var body: some View {
         if viewModel.allMessages.isEmpty {
-            ContentUnavailableView("Downloading data...", systemImage: "cloud.circle")
+            VStack(spacing: 12) {
+                Image(systemName: "cloud.circle")
+                    .font(.system(size: 60))
+                    .foregroundColor(.gray)
+                Text("Downloading data...")
+                    .font(.headline)
+                    .foregroundColor(.secondary)
+            }
         } else {
             List(viewModel.allMessages, selection: $viewModel.selectedMessage) { item in
                 Button {
