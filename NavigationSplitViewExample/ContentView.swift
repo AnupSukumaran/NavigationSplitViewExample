@@ -9,6 +9,9 @@ import SwiftUI
 
 struct ContentView: View {
     @StateObject var viewModel = ViewModel()
+    @Environment(\.horizontalSizeClass) var horizontalSizeClass
+    
+    // Automatically show sidebar on iPad, hide on iPhone
     @State private var columnVisibility: NavigationSplitViewVisibility = .all
     
     var body: some View {
@@ -19,7 +22,14 @@ struct ContentView: View {
                 .toolbar {
                     ToolbarItem(placement: .topBarLeading) {
                         Button(action: {
-                            // Add action
+                            // Toggle sidebar visibility
+                            withAnimation {
+                                if columnVisibility == .all {
+                                    columnVisibility = .detailOnly
+                                } else {
+                                    columnVisibility = .all
+                                }
+                            }
                         }) {
                             Image(systemName: "line.3.horizontal")
                         }
